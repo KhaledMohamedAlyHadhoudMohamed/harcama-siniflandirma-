@@ -1,41 +1,40 @@
 # Harcama Açıklaması Sınıflandırma Projesi
 
-Bu proje, banka işlem açıklamalarını 5 farklı kategoriye (Yeme-İçme, Ulaşım, Fatura, Alışveriş, Sağlık) göre otomatik olarak sınıflandırmayı amaçlar. Word2Vec ve TF-IDF gibi doğal dil işleme yöntemleri kullanılmıştır.
+Bu proje, banka işlem açıklamalarını harcama kategorilerine otomatik olarak sınıflandırır. Word2Vec ve TF-IDF modelleriyle açıklamalar vektörleştirilir. Ardından cosine benzerliği, Jaccard benzerliği ve semantik analiz ile en yakın açıklamalar bulunur.
 
-## 📊 Kullanılan Modeller
+## Gereksinimler
+Python 3.8+ gereklidir. Kurulum için:
+```
+pip install -r requirements.txt
+```
 
-- **Word2Vec CBOW (vector_size=50)** – anlamsal benzerlikleri yakalamak için
-- **TF-IDF** – frekansa dayalı metin karşılaştırmaları için
-
-## 📁 Dosya Açıklamaları
-
-- `harcama_aciklamalari_raw.csv` : Simüle edilmiş 200K banka açıklama verisi
-- `train.py` : Word2Vec ve TF-IDF model eğitim scripti
-- `classify.py` : Giriş açıklamasına göre benzer açıklamaları listeler
-- `utils.py` : Metin temizleme ve ortalama vektör hesaplama yardımcıları
-- `requirements.txt` : Gerekli Python kütüphaneleri
-
-## 🧪 Örnek Kullanımlar
+## Kullanım
 
 ### 1. Model Eğitimi
-
-```bash
+TF-IDF ve Word2Vec modellerini eğitmek için:
+```
 python train.py
 ```
 
 ### 2. Açıklama Sınıflandırma
-
-#### Word2Vec ile:
-```bash
-python classify.py --model word2vec_cbow_50.model --input "SHELL PETROL İSTANBUL" --mode w2v
+Word2Vec modeliyle benzer açıklamaları bulmak için:
+```
+python classify.py --model word2vec_cbow_50.model --input "SHELL PETROL İSTANBUL"
 ```
 
-#### TF-IDF ile:
-```bash
-python classify.py --model tfidf_model.pkl --input "SHELL PETROL İSTANBUL" --mode tfidf
+TF-IDF ile sınıflandırmak için:
+```
+python classify.py --model tfidf_model.pkl --mode tfidf --input "MİGROS MARKET"
 ```
 
-## 💡 Notlar
+### 3. Değerlendirme
+Cosine ve Jaccard benzerliği ile ilk 5 benzer açıklamayı görmek için:
+```
+python evaluate.py
+```
 
-- Word2Vec modeli `word2vec_cbow_50.model` dosyasına, TF-IDF modeli `tfidf_model.pkl` dosyasına kaydedilir.
-- Sınıflandırma sonucu benzer açıklamalar ve benzerlik skoru ile birlikte döner.
+## Veri Seti
+Veri seti `harcama_aciklamalari_raw.csv` dosyasında yer alır. En az 200.000 işlem açıklaması içerir.
+
+## Geliştiren
+GitHub: [KhaledMohamedAlyHadhoudMohamed](https://github.com/KhaledMohamedAlyHadhoudMohamed)
